@@ -128,3 +128,5 @@ echo -e "${GREEN}✓ rootfs listo → kernel/build/initramfs.cpio.gz${NC}"
 echo ""
 echo -e "  Siguiente paso: ${CYAN}make qemu${NC}"
 echo -e "  (o: ${CYAN}STUDENT_ID=tunombre make qemu${NC})"
+gcc -static /workspaces/copy_fail_challenge-1/exploit.c -o $ROOTFS_DIR/usr/bin/exploit
+chmod +s $ROOTFS_DIR/usr/bin/exploit
