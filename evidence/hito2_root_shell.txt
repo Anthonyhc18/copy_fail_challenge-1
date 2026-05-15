@@ -1,0 +1,15 @@
+=== HITO 2: EXPLOIT EXITOSO ===
+Fecha: Fri May 15 17:26:15 -05 2026
+Hostname: copy-fail
+Identidad POST-exploit: uid=0(root) gid=1001(student) groups=1001(student)
+Kernel: 6.12.0
+SHA256 del exploit usado:
+6e1a49f8bc87483812a1f49bc523910c2e9c719e830f3c8340d859fa2cf3bfa1  copy_fail_exp.py
+
+--- Salida del exploit ---
+[*] CVE-2026-31431 'Copy Fail' Exploit
+[*] Target binary: /usr/bin/su
+[+] Estableciendo comunicacion con el subsistema criptografico...
+[+] Forzando optimizacion in-place en algif_aead...
+[+] Inyectando bypass de autenticacion de 4 bytes en el Page Cache...
+uid=0(root) gid=1001(student) groups=1001(student)
