@@ -83,3 +83,17 @@ copy-fail-challenge/
 *Basado en CVE-2026-31431 descubierto por Theori / Xint Code. Divulgado el 29 de abril de 2026.*
 
 commit 2 
+
+Kernel Panic 
+El problema del Kernel Panic (o los fallos abruptos de compilación con Error 2) que experimentamos al principio se resolvió atacando dos frentes críticos: la gestión de recursos de hardware en entornos virtualizados y la falta de herramientas de software en el contenedor
+Paso 1: Corregir el "Hardcodeo" de Rutas
+sed -i 's|/workspaces/copy-fail-challenge|/workspaces/copy_fail_challenge-1|g' ./scripts/01_build_kernel.sh
+Paso 2: Instalar el Compresor Faltante (Solución al Error 127)
+apt-get update && apt-get install -y xz-utils
+Paso 3: Limpieza del Árbol Incompleto
+cd /workspaces/copy_fail_challenge-1 && rm -rf kernel/linux-* 2>/dev/null || true
+Paso 4: Forzar el Uso de un Solo Núcleo (Solución al Error 2 / Kernel Panic)
+sed -i 's/-j$(nproc)/-j1/g' ./scripts/01_build_kernel.sh
+sed -i 's/-j2/-j1/g' ./scripts/01_build_kernel.sh
+ejecutamos com ultimo paso 
+./scripts/03_run_qemu.sh
