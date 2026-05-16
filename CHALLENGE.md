@@ -150,14 +150,14 @@ Si configuraste QEMU con soporte de red, también puedes usar `curl`.
 
 ```sh
 # Dentro de la VM, como usuario student (sin root)
-id   # confirma que eres student
+id   # confirma que eres student
 
 python3 copy_fail_exp.py
 
 # Si el exploit funciona, deberías ver algo como:
 # uid=0(root) gid=1001(student) groups=1001(student)
 
-id   # ahora deberías ser root
+id   # ahora deberías ser root
 ```
 
 > **¿Por qué funciona?** El exploit usa `AF_ALG` + `authencesn` + `splice()`
@@ -170,16 +170,16 @@ id   # ahora deberías ser root
 ```sh
 # Dentro de la VM, como ROOT (después del exploit):
 {
-  echo "=== HITO 2: EXPLOIT EXITOSO ==="
-  echo "Fecha: $(date)"
-  echo "Hostname: $(hostname)"
-  echo "Identidad POST-exploit: $(id)"
-  echo "Kernel: $(uname -r)"
-  echo "SHA256 del exploit usado:"
-  sha256sum copy_fail_exp.py 2>/dev/null || echo "N/A"
-  echo ""
-  echo "--- Salida del exploit ---"
-  # Pega aquí la salida del exploit
+  echo "=== HITO 2: EXPLOIT EXITOSO ==="
+  echo "Fecha: $(date)"
+  echo "Hostname: $(hostname)"
+  echo "Identidad POST-exploit: $(id)"
+  echo "Kernel: $(uname -r)"
+  echo "SHA256 del exploit usado:"
+  sha256sum copy_fail_exp.py 2>/dev/null || echo "N/A"
+  echo ""
+  echo "--- Salida del exploit ---"
+  # Pega aquí la salida del exploit
 } > /tmp/hito2.txt && cat /tmp/hito2.txt
 ```
 
