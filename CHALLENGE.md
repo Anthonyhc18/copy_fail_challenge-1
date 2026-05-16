@@ -196,54 +196,6 @@ git push origin main --tags
 
 ---
 
-## Hito 3 — Mitigación temporal (1.5 pts)
-
-La mitigación oficial antes de poder parchear el kernel es deshabilitar el
-módulo `algif_aead`. Esto NO requiere recompilar el kernel.
-
-```sh
-# Dentro de la VM, como ROOT
-lsmod | grep algif_aead    # confirma que está cargado
-
-# Descargar el módulo
-rmmod algif_aead
-
-# Verificar que ya no está
-lsmod | grep algif_aead    # debe devolver vacío
-
-# Intentar ejecutar el exploit nuevamente
-python3 copy_fail_exp.py   # debe fallar
-
-# Para que persista entre reinicios (en sistemas reales):
-echo "install algif_aead /bin/false" > /etc/modprobe.d/disable-algif.conf
-```
-
-> **Comprende el trade-off:** ¿Qué aplicaciones dejan de funcionar si
-> deshabilitas `algif_aead`? Lee la sección MITIGATION de https://copy.fail/
-
-### 3.1 Evidencia
-
-```sh
-{
-  echo "=== HITO 3: MITIGACIÓN TEMPORAL ==="
-  echo "Fecha: $(date)"
-  echo "Hostname: $(hostname)"
-  echo "algif_aead en lsmod:"
-  lsmod | grep algif_aead || echo "(módulo NO cargado - mitigación activa)"
-  echo ""
-  echo "Intento de exploit post-mitigación:"
-  python3 copy_fail_exp.py 2>&1 | head -10 || echo "(exploit falló como se esperaba)"
-} > /tmp/hito3.txt && cat /tmp/hito3.txt
-```
-
-```bash
-git add evidence/hito3_mitigation.txt
-git commit -m "hito-3: mitigacion temporal aplicada - $(date +%Y-%m-%dT%H:%M)"
-git tag -a hito-3 -m "algif_aead deshabilitado, exploit neutralizado"
-git push origin main --tags
-```
-
----
 
 ## Hito 4 — Parche permanente (2 pts)
 
